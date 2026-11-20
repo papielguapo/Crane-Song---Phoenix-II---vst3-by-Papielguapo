@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crane Song Phoenix II - 1:1 Clone (by papielguapo)</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body data-skin="cranesong">
+    <div class="studio-shell">
+        <!-- HEADER & 7-SKIN SELECTOR -->
+        <header class="top-header">
+            <div class="brand-block">
+                <div class="brand-logo">PII</div>
+                <div class="brand-titles">
+                    <h1>
+                        PHOENIX II TAPE EMULATION
+                        <span class="dev-badge">Developer: papielguapo</span>
+                    </h1>
+                    <p>Clon 1:1 Bit-Exact (AAX/TDM DSP Engine • 24,576-pt PHXTBLDATA • 7 Skins Interactivas)</p>
+                </div>
+            </div>
+
+            <div class="skin-selector-bar" id="skinSelectorBar">
+                <button class="skin-btn active" data-skin-target="cranesong" title="Skin original 1:1 extraída de PhoenixII.aaxplugin">
+                    <span class="skin-dot" style="background:#2ea87e;"></span> Crane Song Phoenix
+                </button>
+                <button class="skin-btn" data-skin-target="flstudio" title="Image-Line FL Studio 21 Fruity Wrapper Skin">
+                    <span class="skin-dot" style="background:#ff9100;"></span> FL Studio
+                </button>
+                <button class="skin-btn" data-skin-target="protools" title="Avid Pro Tools HDX Insert Rack Skin">
+                    <span class="skin-dot" style="background:#0078ff;"></span> Pro Tools
+                </button>
+                <button class="skin-btn" data-skin-target="ableton" title="Ableton Live 12 Flat Device Skin">
+                    <span class="skin-dot" style="background:#ffae00;"></span> Ableton
+                </button>
+                <button class="skin-btn" data-skin-target="logicpro" title="Apple Logic Pro 11 Modern Console Skin">
+                    <span class="skin-dot" style="background:#6c5ce7;"></span> Logic Pro
+                </button>
+                <button class="skin-btn" data-skin-target="win98" title="Microsoft Windows 98 Classic 3D Bevel Skin">
+                    <span class="skin-dot" style="background:#008080;"></span> Win 98
+                </button>
+                <button class="skin-btn" data-skin-target="ataripc" title="Atari ST GEM TOS / Retro Phosphor CRT PC Skin">
+                    <span class="skin-dot" style="background:#33ff66;"></span> Atari PC
+                </button>
+            </div>
+        </header>
+
+        <!-- MAIN PLUGIN STAGE -->
+        <section class="plugin-stage-card">
+            <div class="host-toolbar">
+                <div class="toolbar-group">
+                    <span class="toolbar-label">Preset:</span>
+                    <select class="ctrl-select" id="presetSelect">
+                        <option value="default">00 - Default (Gold / Luminescent)</option>
+                        <option value="vocal_warm">01 - Vocal Silk (Opal / Iridescent)</option>
+                        <option value="drum_slam">02 - Drum Bus Punch (Sapphire / Radiant)</option>
+                        <option value="master_glue">03 - Master Tape Glue (Gold / Luster)</option>
+                        <option value="dark_vintage">04 - Vintage 15 IPS (Opal / Dark Essence)</option>
+                        <option value="bright_air">05 - 30 IPS Air & Sheen (Sapphire / Luminescent)</option>
+                        <option value="hot_trafo">06 - Hot Transformer Drive (Gold / Radiant)</option>
+                    </select>
+                    <button class="ctrl-btn ab-active" id="btnSlotA" title="Slot A">A</button>
+                    <button class="ctrl-btn" id="btnSlotB" title="Slot B">B</button>
+                    <button class="ctrl-btn" id="btnCopyAB" title="Copiar estado actual al otro slot">A → B</button>
+                    <button class="ctrl-btn" id="btnResetParams" title="Restablecer valores de fábrica">Reset</button>
+                </div>
+
+                <div class="toolbar-group">
+                    <span class="toolbar-label">Zoom 1:1:</span>
+                    <select class="ctrl-select" id="scaleSelect">
+                        <option value="1">1.0x (515×161 px)</option>
+                        <option value="1.35">1.35x (695×217 px)</option>
+                        <option value="1.5" selected>1.5x (772×241 px)</option>
+                        <option value="1.75">1.75x (901×281 px)</option>
+                    </select>
+                    <button class="ctrl-btn" id="btnToggleHardwareOverlay" title="Mostrar faceplate 1:1 junto con el deck de la skin">
+                        Vista Dual: ON
+                    </button>
+                    <button class="ctrl-btn" id="btnMasterBypass">
+                        MASTER BYPASS: OFF
+                    </button>
+                </div>
+            </div>
+
+            <!-- 1:1 NATIVE CRANE SONG PHOENIX II HARDWARE BOARD (515x161 px) -->
+            <div class="plugin-window-frame" id="nativeHardwareFrame">
+                <div class="plugin-scale-wrapper" id="scaleWrapper">
+                    <div class="phoenix-native-board show-readouts" id="phoenixNativeBoard">
+                        <div class="phoenix-faceplate-bg" id="faceplateBg"></div>
+
+                        <!-- 5 Exact 60x60 Knobs at Y=41, X=[19, 109, 199, 289, 379] -->
+                        <div class="phoenix-knob-slot" data-param="inputTrim" title="Input Trim (-10.0 a +10.0 dB) • Doble clic para 0.0 dB">
+                            <div class="phoenix-sprite-knob" id="spriteInputTrim"></div>
+                        </div>
+                        <div class="phoenix-knob-slot" data-param="process" title="Process / Tape Saturation (0.0 a 100.0%) • Doble clic para 0%">
+                            <div class="phoenix-sprite-knob" id="spriteProcess"></div>
+                        </div>
+                        <div class="phoenix-knob-slot" data-param="outputTrim" title="Output Trim (-6.0 a +6.0 dB) • Doble clic para 0.0 dB">
+                            <div class="phoenix-sprite-knob" id="spriteOutputTrim"></div>
+                        </div>
+                        <div class="phoenix-knob-slot" data-param="brightness" title="Brightness (Opal / Gold / Sapphire) • Clic o arrastrar">
+                            <div class="phoenix-sprite-knob" id="spriteBrightness"></div>
+                        </div>
+                        <div class="phoenix-knob-slot" data-param="type" title="Tape Type (Luminescent / Iridescent / Radiant / Luster / Dark Essence)">
+                            <div class="phoenix-sprite-knob" id="spriteType"></div>
+                        </div>
+
+                        <!-- Direct clickable hotspots on faceplate text labels -->
+                        <div class="faceplate-hotspot hs-bright-opal" data-set-bright="1" title="Brightness: Opal (Warm HF)"></div>
+                        <div class="faceplate-hotspot hs-bright-gold" data-set-bright="2" title="Brightness: Gold (Neutral HF)"></div>
+                        <div class="faceplate-hotspot hs-bright-sapphire" data-set-bright="3" title="Brightness: Sapphire (Extended HF)"></div>
+
+                        <div class="faceplate-hotspot hs-type-1" data-set-type="1" title="Type 1: Luminescent (Neutral)"></div>
+                        <div class="faceplate-hotspot hs-type-2" data-set-type="2" title="Type 2: Iridescent (Warm/Shiny)"></div>
+                        <div class="faceplate-hotspot hs-type-3" data-set-type="3" title="Type 3: Radiant (Harder Compression)"></div>
+                        <div class="faceplate-hotspot hs-type-4" data-set-type="4" title="Type 4: Luster (Compressed Curve)"></div>
+                        <div class="faceplate-hotspot hs-type-5" data-set-type="5" title="Type 5: Dark Essence (Warmest/Fat)"></div>
+
+                        <!-- Value readouts at Y=132 (Exact 1:1 Black Boxes from Image 1) -->
+                        <div class="phoenix-readout-slot" data-readout="inputTrim" id="roInputTrim">0.00</div>
+                        <div class="phoenix-readout-slot" data-readout="process" id="roProcess">0.00</div>
+                        <div class="phoenix-readout-slot" data-readout="outputTrim" id="roOutputTrim">0.00</div>
+                        <div class="phoenix-readout-slot" data-readout="brightness" id="roBrightness">Gold</div>
+                        <div class="phoenix-readout-slot" data-readout="type" id="roType">Lumin</div>
+
+                        <!-- Double-click on CRANE SONG LTD. logo toggles the Skinned View + Meters & Visor -->
+                        <div class="faceplate-hotspot hs-cranesong-logo" id="craneSongLogoHotspot" title="Doble clic sobre CRANE SONG para abrir/alternar la segunda Skin con Medidores y Visor"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- THEMED SKIN DECK (FL STUDIO / PRO TOOLS / ABLETON / LOGIC PRO / WIN 98 / ATARI PC / CRANE SONG) -->
+            <div class="skinned-plugin-deck" id="skinnedPluginDeck">
+                <div class="deck-window-bar">
+                    <div class="deck-win-left">
+                        <span id="deckWinIcon">🎛️</span>
+                        <span id="deckWinTitle">Crane Song Phoenix II — Tape Emulation [Developer: papielguapo]</span>
+                    </div>
+                    <div class="deck-win-right">
+                        <span id="deckHostTag">AAX / VST3 64-BIT</span>
+                        <span id="deckWinButtons">[ _ ] [ □ ] [ X ]</span>
+                    </div>
+                </div>
+
+                <div class="deck-sub-header">
+                    <span id="deckSubLeft">MANID: CRAN • PRODID: Phx2 • CREATOR: papielguapo</span>
+                    <span id="deckSubRight">DSP: 24,576-PT DOUBLE WAVESHAPER + PRE/DE-EMPHASIS</span>
+                </div>
+
+                <div class="deck-body">
+                    <div class="deck-module">
+                        <div class="deck-param-title">INPUT TRIM</div>
+                        <canvas class="deck-knob-canvas" id="cvInputTrim" width="110" height="110" data-param="inputTrim"></canvas>
+                        <div class="deck-param-value" id="valInputTrim">0.0 dB</div>
+                        <small style="font-size:10px;opacity:0.75;">Range: -10 to +10 dB</small>
+                    </div>
+
+                    <div class="deck-module">
+                        <div class="deck-param-title">PROCESS</div>
+                        <canvas class="deck-knob-canvas" id="cvProcess" width="110" height="110" data-param="process"></canvas>
+                        <div class="deck-param-value" id="valProcess">35.0 %</div>
+                        <small style="font-size:10px;opacity:0.75;">Range: 0 to 100 %</small>
+                    </div>
+
+                    <div class="deck-module">
+                        <div class="deck-param-title">OUTPUT TRIM</div>
+                        <canvas class="deck-knob-canvas" id="cvOutputTrim" width="110" height="110" data-param="outputTrim"></canvas>
+                        <div class="deck-param-value" id="valOutputTrim">0.0 dB</div>
+                        <small style="font-size:10px;opacity:0.75;">Range: -6 to +6 dB</small>
+                    </div>
+
+                    <div class="deck-module">
+                        <div class="deck-param-title">BRIGHTNESS</div>
+                        <canvas class="deck-knob-canvas" id="cvBrightness" width="110" height="110" data-param="brightness"></canvas>
+                        <div class="deck-param-value" id="valBrightness">Gold</div>
+                        <div class="deck-step-pills" id="pillsBrightness">
+                            <button class="deck-pill-btn" data-set-bright="1"><span>Opal</span><span class="deck-pill-led"></span></button>
+                            <button class="deck-pill-btn active" data-set-bright="2"><span>Gold</span><span class="deck-pill-led"></span></button>
+                            <button class="deck-pill-btn" data-set-bright="3"><span>Sapphire</span><span class="deck-pill-led"></span></button>
+                        </div>
+                    </div>
+
+                    <div class="deck-module">
+                        <div class="deck-param-title">TYPE (COLOR)</div>
+                        <canvas class="deck-knob-canvas" id="cvType" width="110" height="110" data-param="type"></canvas>
+                        <div class="deck-param-value" id="valType">Luminescent</div>
+                        <div class="deck-step-pills" id="pillsType">
+                            <button class="deck-pill-btn active" data-set-type="1"><span>Luminescent</span><span class="deck-pill-led"></span></button>
+                            <button class="deck-pill-btn" data-set-type="2"><span>Iridescent</span><span class="deck-pill-led"></span></button>
+                            <button class="deck-pill-btn" data-set-type="3"><span>Radiant</span><span class="deck-pill-led"></span></button>
+                            <button class="deck-pill-btn" data-set-type="4"><span>Luster</span><span class="deck-pill-led"></span></button>
+                            <button class="deck-pill-btn" data-set-type="5"><span>Dark Essence</span><span class="deck-pill-led"></span></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="deck-footer-bar">
+                    <span id="deckFooterLeft">Phoenix II Tape Emulation • Original DSP by David Hill / Crane Song Ltd.</span>
+                    <span id="deckFooterRight">1:1 Clone & Multi-Skin Edition by <strong>papielguapo</strong></span>
+                </div>
+            </div>
+        </section>
+
+        <!-- BOTTOM RACK: REAL-TIME AUDIO ENGINE, METERS & 24,576-PT WAVESHAPER ANALYZER -->
+        <div class="bottom-grid">
+            <div class="bottom-grid-card">
+                <div class="card-header">
+                    <h3>Motor DSP en Tiempo Real & Transporte de Audio</h3>
+                    <span style="font-size:11px;font-weight:700;color:var(--accent-2);" id="audioStatusBadge">DSP LISTO (48.0 kHz)</span>
+                </div>
+
+                <div class="transport-controls">
+                    <button class="play-btn" id="btnPlayAudio">▶ Reproducir Audio DSP</button>
+                    <select class="ctrl-select" id="audioSourceSelect">
+                        <option value="drums">Loop: Batería Analógica & Percusión</option>
+                        <option value="bass">Loop: Bajo Sub & Sintetizador</option>
+                        <option value="chords">Loop: Rhodes Vintage & Acordes</option>
+                        <option value="fullmix" selected>Loop: Mezcla Completa Master Bus</option>
+                        <option value="sine1k">Test: Senoidal 1 kHz (Medición Armónica THD)</option>
+                        <option value="custom">Archivo de Audio Cargado (.WAV / .MP3)</option>
+                    </select>
+                    <label class="ctrl-btn" style="display:inline-flex;align-items:center;gap:4px;">
+                        📂 Cargar Audio
+                        <input type="file" id="audioFileInput" accept="audio/*" style="display:none;">
+                    </label>
+                    <button class="ctrl-btn" id="btnMicInput" title="Procesar entrada de micrófono o tarjeta de sonido en vivo">🎙️ Entrada Live</button>
+                    <button class="ctrl-btn" id="btnExportWav" title="Renderizar y descargar WAV procesado por el motor 1:1 Phoenix II">💾 Exportar WAV</button>
+                </div>
+
+                <div class="meters-container">
+                    <div class="meter-row">
+                        <span>INPUT L/R</span>
+                        <div class="meter-track"><div class="meter-fill" id="meterInFill"></div></div>
+                        <span class="meter-db" id="meterInDb">-∞ dB</span>
+                    </div>
+                    <div class="meter-row">
+                        <span>TAPE DRIVE</span>
+                        <div class="meter-track"><div class="meter-fill sat-meter" id="meterDriveFill"></div></div>
+                        <span class="meter-db" id="meterDriveDb">0.0 %</span>
+                    </div>
+                    <div class="meter-row">
+                        <span>OUTPUT L/R</span>
+                        <div class="meter-track"><div class="meter-fill" id="meterOutFill"></div></div>
+                        <span class="meter-db" id="meterOutDb">-∞ dB</span>
+                    </div>
+                </div>
+
+                <div class="dsp-spec-bar">
+                    <span id="dspSpecCoeffs">Pre: 0.4375 | Post: 0.3125 | Drive: 0.2500</span>
+                    <span id="dspSpecTable">PHXTBL Offset: 0 | FlagA: 1 | Creator: papielguapo</span>
+                </div>
+            </div>
+
+            <div class="bottom-grid-card">
+                <div class="card-header">
+                    <h3>Analizador Armónico & Curva PHXTBLDATA (1:1)</h3>
+                    <span style="font-size:11px;color:var(--text-muted);" id="curveInfoBadge">Table 0 • Gold • Luminescent</span>
+                </div>
+
+                <div class="analyzer-canvases">
+                    <div class="analyzer-box">
+                        <span>Curva No Lineal Cinta</span>
+                        <canvas id="cvTransferCurve" width="220" height="150"></canvas>
+                    </div>
+                    <div class="analyzer-box">
+                        <span>Osciloscopio & Espectro Armónico (Post-DSP)</span>
+                        <canvas id="cvScopeSpectrum" width="420" height="150"></canvas>
+                    </div>
+                </div>
+
+                <div class="dsp-spec-bar">
+                    <span>Doble clic en perilla = Reset • Arrastrar vertical o rueda del ratón</span>
+                    <span>Desarrollador del Plugin: <strong>papielguapo</strong></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="phoenix_dsp_data.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

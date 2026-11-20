@@ -1,0 +1,4 @@
+# CMake / MSVC build directory (intermediate .obj / .lib / .pdb files)
+build/
+*.ilk
+*.pdb

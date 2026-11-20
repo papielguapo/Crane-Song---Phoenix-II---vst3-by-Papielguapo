@@ -1,0 +1,32 @@
+{
+  "Name": "Phoenix II (papielguapo)",
+  "Version": "2.0.0",
+  "Factory Info": {
+    "Vendor": "papielguapo",
+    "URL": "https://papielguapo.audio/phoenix2",
+    "E-Mail": "papielguapo@studio.audio",
+    "Flags": {
+      "Unicode": true,
+      "Classes Discardable": false,
+      "Component Non Discardable": false
+    }
+  },
+  "Classes": [
+    {
+      "CID": "916AE728306FDF8EA5E2B46CB291F73A",
+      "Category": "Audio Module Class",
+      "Name": "Phoenix II (papielguapo)",
+      "Vendor": "papielguapo",
+      "Version": "2.0.0",
+      "SDKVersion": "VST 3.7.8",
+      "Sub Categories": [
+        "Fx",
+        "Distortion",
+        "Mastering"
+      ],
+      "Class Flags": 0,
+      "Cardinality": 2147483647,
+      "Snapshots": []
+    }
+  ]
+}
